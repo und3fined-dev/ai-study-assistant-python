@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-multipart
+langchain
+langchain-openai
+langchain-community
+langchain-chroma
+pypdf
+tiktoken
+pydantic
+duckduckgo-search
+numexpr
+python-dotenv
+openai
