@@ -124,3 +124,8 @@ def agent_ask (body: AgentRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to generate answer from agent:{str(e)}")
     return result
+
+@app.delete('/reset')
+def reset():
+    app.state.rag.reset()
+    return {'message': 'Vector store and history cleared.'}

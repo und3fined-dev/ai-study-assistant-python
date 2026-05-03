@@ -1,4 +1,3 @@
-#pip3 install langchain-community duckduckgo-search numexpr
 import os
 import json
 import numexpr
