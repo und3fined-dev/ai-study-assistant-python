@@ -1,4 +1,5 @@
 #pip3 install streamlit requests
+### streamlit run app.py
 import streamlit as st
 import requests
 import json
@@ -25,3 +26,35 @@ if 'summarize_output' not in st.session_state:
 if 'upload_success' not in st.session_state:
     st.session_state.upload_success = False
 
+######### Sidebar #########
+st.sidebar.title('📚 Study Assistant')
+
+st.sidebar.markdown('---')
+page = st.sidebar.radio(
+    'Navigation', 
+    ['💬 Chat', '📄 Upload', '🧠 Generate MCQs', '🔍 Summarize'],
+    label_visibility='collapsed'
+)
+
+st.sidebar.markdown('---')
+st.sidebar.markdown ('**Backend Status**')
+try:
+    res = requests.get(f'{API_URL}/', timeout=2)
+    if res.status_code == 200:
+        st.sidebar.success("API Connected")
+    else:
+        st.sidebar.error("API Connection error")
+except:
+    st.sidebar.error("API Offline, Start FastAPI first")
+
+st.sidebar.markdown('---')
+st.sidebar.markdown('🗑️ Reset Uploads')
+try:
+    res = requests.delete(f'{API_URL}/reset')
+    if res.status_code == 200:
+        st.session_state.upload_success = False
+        st.sidebar.success("Reset Succcessful")
+    else:
+        st.sidebar.error('Reset failed')
+except:
+    st.sidebar.error("Reset Exception")

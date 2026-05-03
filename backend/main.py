@@ -1,3 +1,4 @@
+###### uvicorn main:app --reload ######
 import os
 import shutil
 from contextlib import asynccontextmanager

@@ -1,4 +1,5 @@
 import os
+import shutil
 from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -80,3 +81,9 @@ class RAGService:
             'answer':  result['answer'],
             'sources': sources
         }
+    
+    def reset(self):
+        shutil.rmtree(self.CHROMA_DIR, ignore_errors=True)
+        os.makedirs(self.CHROMA_DIR, exist_ok=True)
+        shutil.rmtree(self.UPLOAD_DIR, ignore_errors=True)
+        os.makedirs(self.UPLOAD_DIR, exist_ok=True)
