@@ -12,3 +12,5 @@ duckduckgo-search
 numexpr
 python-dotenv
 openai
+streamlit 
+requests

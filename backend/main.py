@@ -9,6 +9,7 @@ from pydantic import BaseModel
 
 from rag_service import RAGService
 from mcq_service import MCQService
+from summarize_service import SummarizeService
 from agent_service import AgentService
 
 load_dotenv()
@@ -18,6 +19,7 @@ load_dotenv()
 async def lifespan (app: FastAPI):
     app.state.rag = RAGService()
     app.state.mcq = MCQService()
+    app.state.summarize = SummarizeService()
     app.state.agent = AgentService()
     yield
 
@@ -48,6 +50,8 @@ class AnswerResponse (BaseModel):
     sources: list
 class MCQRequest (BaseModel):
     topic: str
+class SummarizeRequest (BaseModel):
+    text: str
 class AgentRequest (BaseModel):
     question:str
 
@@ -100,6 +104,16 @@ def generate_mcq (body: MCQRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'Failed to generate MCQs :{str(e)}')
     return response
+
+@app.post('/summarize')
+def summarize (body: SummarizeRequest):
+    if not body.text.strip():
+        raise HTTPException(status_code=400, detail="Please enter text to summarize.")
+    try:
+        result = app.state.summarize.generate_summary(body.text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to Generate Summary: {str(e)}")
+    return result
 
 @app.post('/agent_ask')
 def agent_ask (body: AgentRequest):
