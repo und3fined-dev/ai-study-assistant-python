@@ -20,7 +20,7 @@ class RAGService:
         os.makedirs(self.UPLOAD_DIR, exist_ok=True)
 
         self.embeddings = OpenAIEmbeddings(model = self.EMBEDDINGS_MODEL)
-        self.llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.3)
+        self.llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.4)
         self.rag_prompt = ChatPromptTemplate.from_template("""
         You are a helpful study assistant. Answer the question using ONLY the provided context. If the answer is not in the context, clearly say
         "This information is not in the document." Do not make up information. Be concise and clear.

@@ -6,12 +6,12 @@ from langchain_core.prompts import ChatPromptTemplate
 
 class SummarizeService:
     def __init__(self):
-        self.llm = ChatOpenAI(model = 'gpt-4o-mini', temperature=0)
-        self.prompt = ChatPromptTemplate.from_template("""You are a University AI summarizer. Your task is to summmarize the input: {input} given by the user 
-        & respond ONLY in a valid JSON object in the exact format:
+        self.llm = ChatOpenAI(model = 'gpt-4o-mini', temperature=0.3)
+        self.prompt = ChatPromptTemplate.from_template("""You are an AI summarizer. Your task is to summmarize the input: {input} given by the user 
+        & respond ONLY in a valid JSON object in the exact format. Give proper headings in summary if required to explain easily:
         {{
             "summary": "1/3 summary of the given text",
-            "keypoints": ["Point 1", "point 2", "point 3", "point 4", "point 5"]
+            "keyPoints": ["Point 1", "point 2", "point 3", "point 4", "point 5"]
         }}
         DONOT give any text outside the json object.""")
     

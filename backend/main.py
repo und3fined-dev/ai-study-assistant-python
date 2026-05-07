@@ -45,14 +45,21 @@ class UploadsResponse (BaseModel):
     message: str
     filename: str
     chunk_count: int
+    page_count: int
 class AnswerResponse (BaseModel):
     question: str
     answer: str
     sources: list
 class MCQRequest (BaseModel):
     topic: str
+class MCQResponse (BaseModel):
+    topic: str
+    questions: list
 class SummarizeRequest (BaseModel):
     text: str
+class SummarizeResponse (BaseModel):
+    summary: str
+    keyPoints: list
 class AgentRequest (BaseModel):
     question:str
 
@@ -77,7 +84,8 @@ async def upload_pdf (file: UploadFile= File(...)):
     return UploadsResponse(
         message='PDF Uploaded and Embedded Successfully!',
         filename=file.filename,
-        chunk_count=result['chunk_count']
+        chunk_count=result['chunk_count'],
+        page_count= result['page_count']
     )
 
 @app.post('/ask', response_model=AnswerResponse)
@@ -104,7 +112,10 @@ def generate_mcq (body: MCQRequest):
         response = app.state.mcq.generate(body.topic)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'Failed to generate MCQs :{str(e)}')
-    return response
+    return MCQResponse(
+        topic= body.topic,
+        questions= response['questions']
+    )
 
 @app.post('/summarize')
 def summarize (body: SummarizeRequest):
@@ -114,7 +125,10 @@ def summarize (body: SummarizeRequest):
         result = app.state.summarize.generate_summary(body.text)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to Generate Summary: {str(e)}")
-    return result
+    return SummarizeResponse(
+        summary= result['summary'],
+        keyPoints= result['keyPoints']
+    )
 
 @app.post('/agent_ask')
 def agent_ask (body: AgentRequest):
