@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from rag_service import RAGService
 from mcq_service import MCQService
 from summarize_service import SummarizeService
-from agent_service import AgentService
+#from agent_service import AgentService
 
 load_dotenv()
 UPLOAD_DIR = '../uploads'
@@ -22,7 +22,7 @@ async def lifespan (app: FastAPI):
     app.state.rag = RAGService()
     app.state.mcq = MCQService()
     app.state.summarize = SummarizeService()
-    app.state.agent = AgentService()
+    #app.state.agent = AgentService()
     yield
 
 app = FastAPI(
@@ -61,8 +61,8 @@ class SummarizeRequest (BaseModel):
 class SummarizeResponse (BaseModel):
     summary: str
     keyPoints: list
-class AgentRequest (BaseModel):
-    question:str
+# class AgentRequest (BaseModel):
+#     question:str
 
 @app.get('/')
 def root():
@@ -131,15 +131,15 @@ def summarize (body: SummarizeRequest):
         keyPoints= result['keyPoints']
     )
 
-@app.post('/agent_ask')
-def agent_ask (body: AgentRequest):
-    if not body.question.split():
-        raise HTTPException(status_code=400, detail="Please ask a question.")
-    try:
-        result = app.state.agent.create_agent(body.question)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to generate answer from agent:{str(e)}")
-    return result
+# @app.post('/agent_ask')
+# def agent_ask (body: AgentRequest):
+#     if not body.question.split():
+#         raise HTTPException(status_code=400, detail="Please ask a question.")
+#     try:
+#         result = app.state.agent.create_agent(body.question)
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Failed to generate answer from agent:{str(e)}")
+#     return result
 
 @app.delete('/reset')
 def reset():
