@@ -50,10 +50,11 @@ ai-study-assistant-python/
 │   ├── rag_service.py          # PDF ingestion + RAG query
 │   ├── mcq_service.py          # MCQ generation via LLM
 │   ├── summarize_service.py    # Text summarization via LLM
-│   └── agent_service.py        # LangChain agent (optional)
+│   |── agent_service.py        # LangChain agent (optional)
+|   └── .env                    # API keys (not committed)
+
 ├── uploads/                    # Uploaded PDFs (auto-created)
 ├── chroma_db/                  # Vector store (auto-created)
-├── .env                        # API keys (not committed)
 ├── requirements.txt
 └── README.md
 ```
@@ -89,7 +90,7 @@ pip install -r requirements.txt
 
 ### 4. Set up environment variables
 
-Create a `.env` file in the root of `ai-study-assistant-python/`:
+Create a `.env` file in the backend/ of `ai-study-assistant-python/`:
 
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
