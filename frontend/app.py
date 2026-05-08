@@ -1,8 +1,29 @@
+#pip3 install streamlit requests
 ### streamlit run app.py
 import streamlit as st
 import requests
 import json
 
+import threading
+import time
+import uvicorn
+import sys
+import os
+
+# Absolute path to backend folder
+backend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'backend'))
+sys.path.insert(0, backend_path)
+
+from main import app as fastapi_app  # just 'main', not 'backend.main'
+
+def run_backend():
+    uvicorn.run(fastapi_app, host="0.0.0.0", port=8000)
+
+thread = threading.Thread(target=run_backend, daemon=True)
+thread.start()
+time.sleep(2)
+
+### Start frontend app
 API_URL = 'http://127.0.0.1:8000'
 
 st.set_page_config(
