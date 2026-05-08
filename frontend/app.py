@@ -232,7 +232,7 @@ elif page == '🧠 Generate MCQs':
                     st.session_state.mcq_questions = data['questions']
                 else:
                     detail = response.json().get('detail', 'Unknown error')
-                    st.error(f"Failed to generate MCQs: {detail} ")
+                    st.error(f"Failed to generate MCQs: {detail}")
             except requests.exceptions.ConnectionError:
                 st.error('Cannot connect to backend. Make sure FastAPI is running.')
             except requests.exceptions.Timeout:
