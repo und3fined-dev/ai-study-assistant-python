@@ -1,4 +1,3 @@
-#pip3 install streamlit requests
 ### streamlit run app.py
 import streamlit as st
 import requests

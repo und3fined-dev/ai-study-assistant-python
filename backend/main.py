@@ -14,6 +14,7 @@ from summarize_service import SummarizeService
 from agent_service import AgentService
 
 load_dotenv()
+UPLOAD_DIR = '../uploads'
 
 # ── Lifespan: init services once at startup ───────────────────
 @asynccontextmanager
@@ -72,7 +73,7 @@ async def upload_pdf (file: UploadFile= File(...)):
     if not file.filename.endswith('.pdf'):
         raise HTTPException (status_code=400, detail='Only PDF Files are allowed!')
     
-    save_path = f'uploads/{file.filename}'
+    save_path = f'{UPLOAD_DIR}/{file.filename}'
     with open(save_path, 'wb') as buffer:
         shutil.copyfileobj(file.file, buffer)
 

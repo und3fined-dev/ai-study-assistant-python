@@ -11,8 +11,8 @@ from langchain_classic.chains import create_retrieval_chain
 
 class RAGService:
     load_dotenv()
-    CHROMA_DIR = './chroma_db'
-    UPLOAD_DIR = './uploads'
+    CHROMA_DIR = '../chroma_db'
+    UPLOAD_DIR = '../uploads'
     EMBEDDINGS_MODEL = 'text-embedding-3-small'
 
     def __init__(self):
