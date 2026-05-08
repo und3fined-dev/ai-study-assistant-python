@@ -141,7 +141,8 @@ elif page == '💬 Chat':
                         'content': answer
                     })
                 else:
-                    st.error(f'Failed to generate answer: {response.json().get('detail', 'Unknown error')}')
+                    detail = response.json().get('detail', 'Unknown error')
+                    st.error(f'Failed to generate answer: {detail}')
             except requests.exceptions.ConnectionError:
                 st.error('Cannot connect to backend. Make sure FastAPI is running.')
             except requests.exceptions.Timeout:
@@ -179,7 +180,8 @@ elif page == '🔍 Summarize':
                     st.session_state.summarize_summary = data.get('summary', 'No Summary generated')
                     st.session_state.summarize_keyPoints = data.get('keyPoints', 'No KeyPoints generated')
                 else:
-                    st.error(f"Failed to generate Summary: {response.json().get('detail', "Unknown Error")}")
+                    detail = response.json().get('detail', 'Unknown error')
+                    st.error(f"Failed to generate Summary: {detail}")
             except requests.exceptions.ConnectionError:
                 st.error("Cannot connect to backend. Make sure FastAPI is running.")
             except requests.exceptions.Timeout:
@@ -229,7 +231,8 @@ elif page == '🧠 Generate MCQs':
                     data = response.json()
                     st.session_state.mcq_questions = data['questions']
                 else:
-                    st.error(response.json().get('detail', 'MCQs Generation failed.'))
+                    detail = response.json().get('detail', 'Unknown error')
+                    st.error(f"Failed to generate MCQs: {detail} ")
             except requests.exceptions.ConnectionError:
                 st.error('Cannot connect to backend. Make sure FastAPI is running.')
             except requests.exceptions.Timeout:
