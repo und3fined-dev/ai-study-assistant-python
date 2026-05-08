@@ -3,8 +3,8 @@ title: AI Study Assistant
 emoji: 📚
 colorFrom: blue
 colorTo: green
-sdk: streamlit
-app_file: frontend/app.py
+sdk: docker
+app_port: 7860
 pinned: false
 ---
 # 📚 AI Study Assistant
